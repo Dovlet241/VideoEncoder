@@ -29,7 +29,7 @@ def get_codec(filepath, channel="v:0"):
 
 def encode(filepath):
     basefilepath = os.path.splitext(filepath)[0]
-    output_filepath = basefilepath + ".HEVC" + ".mp4"
+    output_filepath = basefilepath + ".h264.converted" + ".mp4"
     assert output_filepath != filepath
     if os.path.isfile(output_filepath):
         logging.info('Skipping "{}": file already exists'.format(output_filepath))
@@ -43,15 +43,15 @@ def encode(filepath):
     # Video transcode options
     else:
         # Transcode to h265 / hvc1
-        video_opts = "-c:v libx264 -pix_fmt yuv420p -crf 28 -tune zerolatency -preset fast -crf 17 -threads 8"
+        video_opts = "-c:v libx264 -pix_fmt yuv420p -crf 18 -bf 2 -tune zerolatency -preset fast -threads 8"
     # Get the audio channel codec
     audio_codec = get_codec(filepath, channel="a:0")
     if audio_codec == []:
         audio_opts = ""
     elif audio_codec[0] == "aac":
-        audio_opts = "-c:a copy"
+        audio_opts = "-c:a aac -q:a 1 -ac 2 -ar 48000 -use_editlist 0 -movflags +faststart"
     else:
-        audio_opts = "-c:a aac -b:a 192k"
+        audio_opts = "-c:a aac -q:a 1 -ac 2 -ar 48000 -use_editlist 0 -movflags +faststart"
     call(
         ["ffmpeg", "-i", filepath]
         + video_opts.split()
