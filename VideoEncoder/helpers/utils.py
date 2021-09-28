@@ -36,10 +36,10 @@ async def add_task(event):
             )
             remove(new_file)
             remove(thumb)
-            await msg.edit("`Video Encoded to x265`")
+            await msg.edit("`Video Encoded to x264`")
         else:
             await msg.edit(
-                "`Something wents wrong while encoding your file. Make sure it is not already in HEVC format.`"
+                "`Something wents wrong while encoding your file.`"
             )
             remove(filepath)
     except Exception as e:
