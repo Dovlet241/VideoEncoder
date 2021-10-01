@@ -43,7 +43,7 @@ def encode(filepath):
     # Video transcode options
     else:
         # Transcode to h264
-        video_opts = "-c:v libx264 -pix_fmt yuv420p -crf 23 -bf 2 -tune zerolatency"
+        video_opts = "-c:v libx264 -pix_fmt yuv420p -crf 28 -bf 2 -tune zerolatency"
     # Get the audio channel codec
     audio_codec = get_codec(filepath, channel="a:0")
     if audio_codec == []:
