@@ -42,16 +42,16 @@ def encode(filepath):
         return None
     # Video transcode options
     else:
-        # Transcode to h265 / hvc1
-        video_opts = "-c:v libx264 -pix_fmt yuv420p -crf 18 -bf 2 -tune zerolatency -preset fast -threads 8"
+        # Transcode to h264
+        video_opts = "-c:v libx264 -pix_fmt yuv420p -crf 23 -bf 2 -tune zerolatency"
     # Get the audio channel codec
     audio_codec = get_codec(filepath, channel="a:0")
     if audio_codec == []:
         audio_opts = ""
     elif audio_codec[0] == "aac":
-        audio_opts = "-c:a aac -q:a 1 -ac 2 -ar 48000 -use_editlist 0 -movflags +faststart"
+        audio_opts = "-c:a aac -b:a 128k -ac 2 -use_editlist 0 -movflags +faststart"
     else:
-        audio_opts = "-c:a aac -q:a 1 -ac 2 -ar 48000 -use_editlist 0 -movflags +faststart"
+        audio_opts = "-c:a aac -b:a 128k -ac 2 -use_editlist 0 -movflags +faststart"
     call(
         ["ffmpeg", "-i", filepath]
         + video_opts.split()
