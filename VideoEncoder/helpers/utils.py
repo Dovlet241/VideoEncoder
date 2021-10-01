@@ -28,6 +28,11 @@ async def add_task(event):
             await event.client.send_file(
                 event.chat_id,
                 file=new_file,
+                supports_streaming=True,
+                thumb=thumb,
+                attributes=[
+                    DocumentAttributeVideo(duration=duration, w=width, h=height)
+                ],
             )
             remove(new_file)
             remove(thumb)
